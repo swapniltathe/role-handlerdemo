@@ -1,0 +1,22 @@
+---
+# tasks file for handlerdemo
+- name: Install server
+  ansible.builtin.apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: Copy source file
+  ansible.builtin.template:
+    src: files/index.html
+    dest: /usr/share/nginx/html/index.html
+  notify:
+    - restart-nginx
+
+- name: Copy source file
+  ansible.builtin.template:
+    src: files/update.html
+    dest: /usr/share/nginx/html/index.html
+    mode: "0755"
+  notify:
+    - restart-nginx
